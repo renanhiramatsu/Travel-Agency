@@ -1,12 +1,15 @@
 from flask import Flask
-from flask_restful import Resource, Api
+from flask_restful import Api
+from resources.hotel import Hotels, Hotel
+
 
 app = Flask(__name__)
 api = Api(app)
 
-class Hotels(Resource):
-    def get(self):
-        return {
-            'hotels': ['Marriot', 'Hilton', 'Holiday Inn', "Wyndham"]
-        }
+# Endpoints
+api.add_resource(Hotels, '/hotels')
+api.add_resource(Hotel, '/hotels/<string:hotel_id>')
 
+
+if __name__ == '__main__':
+    app.run(debug=True)
