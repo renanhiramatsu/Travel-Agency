@@ -7,5 +7,6 @@ api = Api(app)
 class Hotels(Resource):
     def get(self):
         return {
-            'hotels': ['Marriot', 'Hilton', 'Holiday Inn']
+            'hotels': ['Marriot', 'Hilton', 'Holiday Inn', "Wyndham"]
         }
+
