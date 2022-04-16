@@ -29,6 +29,14 @@ class Hotels(Resource):
         }
 
 class Hotel(Resource):
+
+    params = reqparse.RequestParser()
+    params.add_argument('name', type=str, required=True, help='Name cannot be blank')
+    params.add_argument('city', type=str, required=True, help='City cannot be blank')
+    params.add_argument('stars', type=float, required=True, help='Stars cannot be blank')
+    params.add_argument('price', type=float, required=True, help='Price cannot be blank')
+
+
     def find_hotel(hotel_id):
         for hotel in hotels:
             if hotel['hotel_id'] == hotel_id:
@@ -36,19 +44,16 @@ class Hotel(Resource):
         return None
 
     def get(self, hotel_id):
-        return Hotel.find_hotel(hotel_id) if Hotel.find_hotel(hotel_id) else {
-            'message': 'Hotel not found'
-        }, 404
+        hotel = Hotel.find_hotel(hotel_id)
+        if hotel:
+            return hotel, 200
+        else:
+            return {'message': 'Hotel not found'}, 404
         
     
     def post(self, hotel_id):
-        params = reqparse.RequestParser()
-        params.add_argument('name', type=str, required=True, help='Name cannot be blank')
-        params.add_argument('city', type=str, required=True, help='City cannot be blank')
-        params.add_argument('stars', type=float, required=True, help='Stars cannot be blank')
-        params.add_argument('price', type=float, required=True, help='Price cannot be blank')
 
-        data = params.parse_args()
+        data = Hotel.params.parse_args()
 
         newHotel = {
             'hotel_id': hotel_id,
@@ -63,8 +68,21 @@ class Hotel(Resource):
         return newHotel, 201
 
     def put(self, hotel_id):
-        pass
+
+        data = Hotel.params.parse_args()
+        newHotel = { 'hotel_id': hotel_id, **data }
+
+        hotel = Hotel.find_hotel(hotel_id)
+        if hotel:
+            hotel.update(newHotel)
+            return hotel, 200
+        else:
+            hotels.append(newHotel)
+            return newHotel, 201
+
 
     def delete(self, hotel_id):
-        pass
+        global hotels
+        hotels = list(filter(lambda hotel: hotel['hotel_id'] != hotel_id, hotels))
+        return {'message': 'Hotel deleted'}, 200
 
