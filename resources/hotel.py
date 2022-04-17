@@ -1,25 +1,26 @@
-import resource
 from flask_restful import Resource, reqparse
+from models.hotel import HotelModel
 
 hotels = [{
-    'hotel_id': '1',
+    'hotel_id': 1,
     'name': 'Marriot',
     'city': 'Cancun',
     'stars': 5,
     'price': 119.29
 }, {
-    'hotel_id': '2',
+    'hotel_id': 2,
     'name': 'Hilton',
     'city': 'Istanbul',
     'stars': 4.2,
     'price': 89.99
 }, {
-    'hotel_id': '3',
+    'hotel_id': 3,
     'name': 'Holiday Inn',
     'city': 'London',
     'stars': 3.9,
     'price': 99.99
 }]
+
 
 
 class Hotels(Resource):
@@ -55,30 +56,23 @@ class Hotel(Resource):
 
         data = Hotel.params.parse_args()
 
-        newHotel = {
-            'hotel_id': hotel_id,
-            'name': data['name'],
-            'city': data['city'],
-            'stars': data['stars'],
-            'price': data['price']
-        }
+        new_hotel = HotelModel(hotel_id, **data)
+        hotels.append(new_hotel.json())
+        return new_hotel.json(), 201
 
-        hotels.append(newHotel)
-
-        return newHotel, 201
 
     def put(self, hotel_id):
 
         data = Hotel.params.parse_args()
-        newHotel = { 'hotel_id': hotel_id, **data }
+        new_hotel = HotelModel(hotel_id, **data)
 
         hotel = Hotel.find_hotel(hotel_id)
         if hotel:
-            hotel.update(newHotel)
+            hotel.update(new_hotel.json())
             return hotel, 200
         else:
-            hotels.append(newHotel)
-            return newHotel, 201
+            hotels.append(new_hotel.json())
+            return new_hotel.json(), 201
 
 
     def delete(self, hotel_id):
