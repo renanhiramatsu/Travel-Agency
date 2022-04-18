@@ -8,7 +8,7 @@ api = Api(app)
 
 # Endpoints
 api.add_resource(Hotels, '/hotels')
-api.add_resource(Hotel, '/hotels/<string:hotel_id>')
+api.add_resource(Hotel, '/hotels/<int:hotel_id>')
 
 
 if __name__ == '__main__':
