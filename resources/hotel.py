@@ -45,19 +45,21 @@ class Hotel(Resource):
         return None
 
     def get(self, hotel_id):
-        hotel = Hotel.find_hotel(hotel_id)
+        hotel = HotelModel.find_hotel(hotel_id)
         if hotel:
-            return hotel, 200
+            return hotel.json(), 200
         else:
             return {'message': 'Hotel not found'}, 404
         
     
     def post(self, hotel_id):
+        if HotelModel.find_hotel(hotel_id):
+            return {'message': 'Hotel id {} already exists'.format(hotel_id)}, 400
 
         data = Hotel.params.parse_args()
-
         new_hotel = HotelModel(hotel_id, **data)
-        hotels.append(new_hotel.json())
+        new_hotel.save_hotel()
+        
         return new_hotel.json(), 201
 
 
@@ -66,10 +68,10 @@ class Hotel(Resource):
         data = Hotel.params.parse_args()
         new_hotel = HotelModel(hotel_id, **data)
 
-        hotel = Hotel.find_hotel(hotel_id)
+        hotel = HotelModel.find_hotel(hotel_id)
         if hotel:
-            hotel.update(new_hotel.json())
-            return hotel, 200
+            hotel.update_hotel(**data)
+            return hotel.json(), 200
         else:
             hotels.append(new_hotel.json())
             return new_hotel.json(), 201
