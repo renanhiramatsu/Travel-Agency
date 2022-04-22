@@ -66,19 +66,26 @@ class Hotel(Resource):
     def put(self, hotel_id):
 
         data = Hotel.params.parse_args()
-        new_hotel = HotelModel(hotel_id, **data)
+        hotel_isFound = HotelModel.find_hotel(hotel_id)
 
-        hotel = HotelModel.find_hotel(hotel_id)
-        if hotel:
-            hotel.update_hotel(**data)
-            return hotel.json(), 200
-        else:
-            hotels.append(new_hotel.json())
-            return new_hotel.json(), 201
+        if hotel_isFound:
+            hotel_isFound.update_hotel(**data)
+            hotel_isFound.save_hotel()
+            return hotel_isFound.json(), 200
+        
+        
+        new_hotel = HotelModel(hotel_id, **data)
+        new_hotel.save_hotel()
+        return new_hotel.json(), 201
 
 
     def delete(self, hotel_id):
-        global hotels
-        hotels = list(filter(lambda hotel: hotel['hotel_id'] != hotel_id, hotels))
-        return {'message': 'Hotel deleted'}, 200
+        
+        hotel_isFound = HotelModel.find_hotel(hotel_id)
+        if hotel_isFound:
+            hotel_isFound.delete_hotel()
+            return {'message': 'Hotel deleted'}, 200
+        else:
+            return {'message': 'Hotel not found'}, 404
+        
 

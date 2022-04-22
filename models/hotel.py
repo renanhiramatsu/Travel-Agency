@@ -46,4 +46,6 @@ class HotelModel(db.Model):
         self.price = price
         db.session.commit()
 
-        
+    def delete_hotel(self):
+        db.session.delete(self)
+        db.session.commit()
