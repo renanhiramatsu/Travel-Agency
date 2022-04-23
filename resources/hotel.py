@@ -27,7 +27,12 @@ class Hotel(Resource):
 
         data = Hotel.params.parse_args()
         new_hotel = HotelModel(hotel_id, **data)
-        new_hotel.save_hotel()
+
+        try: 
+            new_hotel.save_hotel()
+            return new_hotel.json(), 201
+        except:
+            return {'message': 'An error occurred while creating the hotel'}, 500
         
         return new_hotel.json(), 201
 
@@ -44,8 +49,11 @@ class Hotel(Resource):
         
         
         new_hotel = HotelModel(hotel_id, **data)
-        new_hotel.save_hotel()
-        return new_hotel.json(), 201
+        try:
+            new_hotel.save_hotel()
+            return new_hotel.json(), 201
+        except:
+            return {'message': 'An error occurred while creating the hotel'}, 500
 
 
     def delete(self, hotel_id):
