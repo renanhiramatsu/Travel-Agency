@@ -60,8 +60,11 @@ class Hotel(Resource):
         
         hotel_isFound = HotelModel.find_hotel(hotel_id)
         if hotel_isFound:
-            hotel_isFound.delete_hotel()
-            return {'message': 'Hotel deleted'}, 200
+            try:
+                hotel_isFound.delete_hotel()
+                return {'message': 'Hotel deleted'}, 200
+            except:
+                return {'message': 'An error occurred while deleting the hotel'}, 500
         else:
             return {'message': 'Hotel not found'}, 404
         
