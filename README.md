@@ -9,9 +9,10 @@ You can see the preview screenshots [here.](https://www.renanhiramatsu.com/#3)
 - 
 # 🔧 Running the project
 1. Clone this repository.
-2. Install dependencies on requirements.py (preferably in a Python venv)
-3. Run main.py
-4. Use endpoints to manipulate data
+2. Install dependencies on requirements.py (preferably in a Python venv -> py -m venv <work_env>)
+3. If using python env, activate the env (source ./work_env/bin/activate)
+4. Run main.py (py main.py)
+5. Use endpoints to manipulate data
 
 # 🔥 Tech stack
 - Python 3.9.10
