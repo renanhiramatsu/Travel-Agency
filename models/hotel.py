@@ -32,7 +32,6 @@ class HotelModel(db.Model):
     @classmethod
     def find_hotel(cls, hotel_id):
         return cls.query.filter_by(hotel_id=hotel_id).first() if cls.query.filter_by(hotel_id=hotel_id).first() else None
-        
         # SELECT * FROM hotels WHERE hotel_id = hotel_id
 
     def save_hotel(self):

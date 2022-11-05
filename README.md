@@ -19,7 +19,7 @@ You can see the preview screenshots [here.](https://www.renanhiramatsu.com/#3)
 - Flask 2.1.1
 - Flask RESTful 0.3.9
 - SQLite3
-- 
+- JWT Authentication
 
 # 👨 Contributors
 [@renanhiramatsu](https://www.linkedin.com/in/renan-hiramatsu-83583216a/)

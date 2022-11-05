@@ -32,9 +32,8 @@ class Hotel(Resource):
             new_hotel.save_hotel()
             return new_hotel.json(), 201
         except:
-            return {'message': 'An error occurred while creating the hotel'}, 500
+            return {'message': 'An internal error occurred while creating the hotel'}, 500
         
-        return new_hotel.json(), 201
 
 
     def put(self, hotel_id):
@@ -53,7 +52,7 @@ class Hotel(Resource):
             new_hotel.save_hotel()
             return new_hotel.json(), 201
         except:
-            return {'message': 'An error occurred while creating the hotel'}, 500
+            return {'message': 'An internal error occurred while creating the hotel'}, 500
 
 
     def delete(self, hotel_id):
@@ -62,9 +61,9 @@ class Hotel(Resource):
         if hotel_isFound:
             try:
                 hotel_isFound.delete_hotel()
-                return {'message': 'Hotel deleted'}, 200
+                return {'message': 'Hotel ${name} deleted'}, 200
             except:
-                return {'message': 'An error occurred while deleting the hotel'}, 500
+                return {'message': 'An error internal occurred while deleting the hotel'}, 500
         else:
             return {'message': 'Hotel not found'}, 404
         
