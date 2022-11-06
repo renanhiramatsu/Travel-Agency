@@ -12,7 +12,7 @@ class UserModel(db.Model):
         self.first_name = first_name
         self.last_name = last_name
 
-    def parseToJson(self):
+    def parse_to_json(self):
         return {
             'user_id' : self.user_id,
             'first_name' : self.first_name,

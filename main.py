@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_restful import Api
 from resources.hotel import Hotel, Hotels
+from resources.user import User, Users
 
 
 app = Flask(__name__)
@@ -15,6 +16,9 @@ def create_tables():
 # Endpoints
 api.add_resource(Hotels, '/hotels')
 api.add_resource(Hotel, '/hotels/<int:hotel_id>')
+
+api.add_resource(Users, '/users')
+api.add_resource(User, '/users/<int:user_id>')
 
 
 if __name__ == '__main__':
