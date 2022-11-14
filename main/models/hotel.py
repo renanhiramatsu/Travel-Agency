@@ -17,7 +17,7 @@ class HotelModel(db.Model):
         self.hotel_id = hotel_id
         self.name = name
         self.city = city
-        self.stars = starsw
+        self.stars = stars
         self.price = price
 
     def json(self): # This method is used to return the data in a json format
