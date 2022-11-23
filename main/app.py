@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_restful import Api
 from resources.hotel import Hotel, Hotels
-from resources.user import User
+from resources.user import User, UserRegister
 
 
 app = Flask(__name__)
@@ -18,6 +18,7 @@ api.add_resource(Hotels, '/hotels')
 api.add_resource(Hotel, '/hotels/<int:hotel_id>')
 
 api.add_resource(User, '/users/<int:user_id>')
+api.add_resource(UserRegister, '/register')
 
 
 if __name__ == '__main__':

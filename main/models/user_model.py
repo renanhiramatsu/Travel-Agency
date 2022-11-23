@@ -9,8 +9,7 @@ class UserModel(db.Model):
     u_login = db.Column(db.String(80))
     u_password = db.Column(db.String(80))
 
-    def __init__(self, user_id, first_name, last_name, u_login, u_password):
-        self.user_id = user_id
+    def __init__(self, first_name, last_name, u_login, u_password):
         self.first_name = first_name
         self.last_name = last_name
         self.u_login = u_login
@@ -29,6 +28,10 @@ class UserModel(db.Model):
     def find_user(cls, user_id):
         return cls.query.filter_by(user_id=user_id).first() if cls.query.filter_by(user_id=user_id).first() else None
     
+    @classmethod
+    def login_exists(cls, u_login):
+        return cls.query.filter_by(u_login=u_login).first() if cls.query.filter_by(u_login=u_login).first() else None
+
     def save_user(self):
         db.session.add(self)
         db.session.commit()
